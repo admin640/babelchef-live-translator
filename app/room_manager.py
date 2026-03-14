@@ -56,6 +56,7 @@ class Room:
     participants: dict[str, Participant] = field(default_factory=dict)
     en_to_hi_pipeline: TranslationPipeline | None = None
     hi_to_en_pipeline: TranslationPipeline | None = None
+    ready_event: asyncio.Event = field(default_factory=asyncio.Event)
     _created_at: float = field(default_factory=lambda: __import__("time").time())
 
     @property
@@ -138,6 +139,7 @@ class RoomManager:
         # Initialize translation pipelines when both participants join
         if room.is_full:
             await self._init_pipelines(room)
+            room.ready_event.set()  # Signal waiting participants
 
         logger.info(
             "Participant %s joined room %s as %s",

@@ -139,10 +139,11 @@ async def websocket_endpoint(websocket: WebSocket, room_id: str, role: str):
     logger.info("WS connected: participant=%s role=%s room=%s", participant_id, role, room_id)
 
     # Wait until room is full (both participants joined)
-    while not room.is_full:
+    if not room.is_full:
         await websocket.send_json({"type": "waiting", "message": "Waiting for other participant..."})
-        await asyncio.sleep(1)
-        # Re-check room (might have been destroyed)
+        # Block until the ready_event is set (when second participant joins)
+        await room.ready_event.wait()
+        # Re-check room (might have been destroyed during wait)
         room = room_manager.get_room(room_id)
         if room is None:
             await websocket.close()
