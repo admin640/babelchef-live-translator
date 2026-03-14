@@ -5,12 +5,11 @@ WORKDIR /app
 # Install uv for fast dependency resolution
 RUN pip install --no-cache-dir uv
 
-# Copy project files
-COPY pyproject.toml .
-COPY app/ app/
+# Copy all project files (including README.md for hatchling)
+COPY . .
 
-# Install dependencies
-RUN uv pip install --system -e .
+# Install dependencies (non-editable for production)
+RUN uv pip install --system .
 
 # Expose port
 EXPOSE 8080
