@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BabelChef — Live Translation Call</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- ── Landing / Room Setup ── -->
+    <div id="setup-screen" class="screen active">
+        <div class="setup-container">
+            <div class="logo">
+                <span class="logo-emoji">🍳</span>
+                <h1>BabelChef</h1>
+                <p class="tagline">Real-time translated video calls for cooking together across languages</p>
+            </div>
+
+            <div class="setup-card">
+                <h2>Start or Join a Call</h2>
+
+                <div class="role-selector">
+                    <label class="role-option">
+                        <input type="radio" name="role" value="english" checked>
+                        <div class="role-card">
+                            <span class="flag">🇺🇸</span>
+                            <span class="role-label">English Speaker</span>
+                        </div>
+                    </label>
+                    <label class="role-option">
+                        <input type="radio" name="role" value="hindi">
+                        <div class="role-card">
+                            <span class="flag">🇮🇳</span>
+                            <span class="role-label">Hindi Speaker</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="actions">
+                    <button id="btn-create" class="btn btn-primary">
+                        <span>📞</span> Create New Room
+                    </button>
+                    <div class="divider"><span>or join existing</span></div>
+                    <div class="join-row">
+                        <input type="text" id="input-room-id" placeholder="Room Code" maxlength="8">
+                        <button id="btn-join" class="btn btn-secondary">Join</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="room-created" class="room-info hidden">
+                <p>Room created! Share this code:</p>
+                <div class="room-code" id="display-room-id"></div>
+                <p class="hint">Waiting for other participant to join...</p>
+                <div class="loading-dots"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Call Screen ── -->
+    <div id="call-screen" class="screen">
+        <div class="call-layout">
+            <!-- Remote video (other participant's camera) -->
+            <div class="video-container remote-video">
+                <video id="remote-video" autoplay playsinline></video>
+                <canvas id="remote-canvas"></canvas>
+                <div class="video-label" id="remote-label">
+                    <span class="flag-badge">🇮🇳</span> Mom
+                </div>
+            </div>
+
+            <!-- Local video (your camera, picture-in-picture) -->
+            <div class="video-container local-video">
+                <video id="local-video" autoplay playsinline muted></video>
+                <div class="video-label" id="local-label">
+                    <span class="flag-badge">🇺🇸</span> You
+                </div>
+            </div>
+
+            <!-- Translation subtitles -->
+            <div id="subtitle-overlay" class="subtitle-overlay">
+                <div id="subtitle-text" class="subtitle-text"></div>
+            </div>
+
+            <!-- Call controls -->
+            <div class="call-controls">
+                <button id="btn-mute" class="control-btn" title="Mute">
+                    <span class="icon">🎤</span>
+                </button>
+                <button id="btn-camera" class="control-btn" title="Toggle Camera">
+                    <span class="icon">📷</span>
+                </button>
+                <button id="btn-end" class="control-btn control-end" title="End Call">
+                    <span class="icon">📵</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Event log (collapsible, for debugging) -->
+        <details class="event-log">
+            <summary>Event Log</summary>
+            <div id="event-log" class="log-content"></div>
+        </details>
+    </div>
+
+    <script src="/static/js/audio-processor.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
