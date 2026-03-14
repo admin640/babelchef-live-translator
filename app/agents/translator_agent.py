@@ -13,7 +13,7 @@ import os
 
 from google.adk.agents import Agent
 
-_MODEL = os.getenv("DEMO_AGENT_MODEL", "gemini-2.0-flash-live-001")
+_MODEL = os.getenv("DEMO_AGENT_MODEL", "gemini-live-2.5-flash-native-audio")
 
 # ── English → Hindi translator ──────────────────────────────────────────
 
