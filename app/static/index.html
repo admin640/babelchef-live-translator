@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BabelChef — Live Translation Call</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css?v=2026031510">
+</head>
+<body>
+    <!-- ── Landing / Room Setup ── -->
+    <div id="setup-screen" class="screen active">
+        <div class="setup-container">
+            <div class="logo">
+                <span class="logo-emoji">🍳</span>
+                <h1>BabelChef</h1>
+                <p class="tagline">Real-time translated video calls for cooking together across languages</p>
+            </div>
+
+            <div class="setup-card">
+                <h2>Start or Join a Call</h2>
+
+                <div class="form-group">
+                    <label for="input-name" class="form-label">Your Name</label>
+                    <input type="text" id="input-name" class="form-input" placeholder="e.g. Vivek, Dad, Chef" maxlength="20">
+                </div>
+
+                <div class="form-group">
+                    <label for="select-language" class="form-label">Your Language</label>
+                    <select id="select-language" class="form-select">
+                        <option value="en" data-flag="🇺🇸">English</option>
+                        <option value="hi" data-flag="🇮🇳">Hindi (हिन्दी)</option>
+                        <option value="es" data-flag="🇪🇸">Spanish (Español)</option>
+                        <option value="fr" data-flag="🇫🇷">French (Français)</option>
+                        <option value="de" data-flag="🇩🇪">German (Deutsch)</option>
+                        <option value="it" data-flag="🇮🇹">Italian (Italiano)</option>
+                        <option value="pt" data-flag="🇧🇷">Portuguese (Português)</option>
+                        <option value="ja" data-flag="🇯🇵">Japanese (日本語)</option>
+                        <option value="ko" data-flag="🇰🇷">Korean (한국어)</option>
+                        <option value="zh" data-flag="🇨🇳">Chinese (中文)</option>
+                        <option value="ar" data-flag="🇸🇦">Arabic (العربية)</option>
+                        <option value="ru" data-flag="🇷🇺">Russian (Русский)</option>
+                        <option value="tr" data-flag="🇹🇷">Turkish (Türkçe)</option>
+                        <option value="nl" data-flag="🇳🇱">Dutch (Nederlands)</option>
+                        <option value="pl" data-flag="🇵🇱">Polish (Polski)</option>
+                        <option value="th" data-flag="🇹🇭">Thai (ไทย)</option>
+                        <option value="vi" data-flag="🇻🇳">Vietnamese (Tiếng Việt)</option>
+                        <option value="id" data-flag="🇮🇩">Indonesian (Bahasa)</option>
+                        <option value="ms" data-flag="🇲🇾">Malay (Bahasa Melayu)</option>
+                        <option value="bn" data-flag="🇧🇩">Bengali (বাংলা)</option>
+                        <option value="ta" data-flag="🇮🇳">Tamil (தமிழ்)</option>
+                        <option value="te" data-flag="🇮🇳">Telugu (తెలుగు)</option>
+                        <option value="mr" data-flag="🇮🇳">Marathi (मराठी)</option>
+                        <option value="gu" data-flag="🇮🇳">Gujarati (ગુજરાતી)</option>
+                        <option value="kn" data-flag="🇮🇳">Kannada (ಕನ್ನಡ)</option>
+                        <option value="ml" data-flag="🇮🇳">Malayalam (മലയാളം)</option>
+                        <option value="pa" data-flag="🇮🇳">Punjabi (ਪੰਜਾਬੀ)</option>
+                        <option value="ur" data-flag="🇵🇰">Urdu (اردو)</option>
+                        <option value="sw" data-flag="🇰🇪">Swahili (Kiswahili)</option>
+                        <option value="cs" data-flag="🇨🇿">Czech (Čeština)</option>
+                        <option value="ro" data-flag="🇷🇴">Romanian (Română)</option>
+                        <option value="hu" data-flag="🇭🇺">Hungarian (Magyar)</option>
+                        <option value="el" data-flag="🇬🇷">Greek (Ελληνικά)</option>
+                        <option value="he" data-flag="🇮🇱">Hebrew (עברית)</option>
+                        <option value="fil" data-flag="🇵🇭">Filipino (Tagalog)</option>
+                        <option value="uk" data-flag="🇺🇦">Ukrainian (Українська)</option>
+                        <option value="sv" data-flag="🇸🇪">Swedish (Svenska)</option>
+                        <option value="no" data-flag="🇳🇴">Norwegian (Norsk)</option>
+                        <option value="da" data-flag="🇩🇰">Danish (Dansk)</option>
+                        <option value="fi" data-flag="🇫🇮">Finnish (Suomi)</option>
+                    </select>
+                </div>
+
+                <div class="actions">
+                    <button id="btn-create" class="btn btn-primary">
+                        <span>📞</span> Create New Room
+                    </button>
+                    <div class="divider"><span>or join existing</span></div>
+                    <div class="join-row">
+                        <input type="text" id="input-room-id" placeholder="Room Code" maxlength="8">
+                        <button id="btn-join" class="btn btn-secondary">Join</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="room-created" class="room-info hidden">
+                <p>Room created! Share this code:</p>
+                <div class="code-container">
+                    <div class="room-code" id="display-room-id"></div>
+                    <button id="btn-copy" class="btn-icon" title="Copy Room Code">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                </div>
+                <p class="hint">Waiting for other participant to join...</p>
+                <div class="loading-dots"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Call Screen ── -->
+    <div id="call-screen" class="screen">
+        <!-- Room code banner (visible until other person joins) -->
+        <div id="room-code-banner" class="room-code-banner hidden">
+            <span>Share this code: <strong id="banner-room-code"></strong></span>
+            <button id="btn-copy-banner" class="btn-copy-small" title="Copy">📋</button>
+            <button id="btn-dismiss-banner" class="btn-dismiss" title="Dismiss">✕</button>
+        </div>
+
+        <div class="call-layout">
+            <!-- Remote Video (WebRTC) -->
+            <div class="video-container remote-video" id="remote-video-container">
+                <div class="video-overlay">
+                    <span class="participant-name" id="remote-name">Waiting...</span>
+                </div>
+
+                <!-- Cooking Insights — floating badges on the video -->
+                <div id="cooking-insights" class="cooking-insights"></div>
+            </div>
+
+            <!-- Local Video -->
+            <div class="video-container local-video">
+                <video id="local-video" autoplay playsinline muted></video>
+                <div class="video-overlay">
+                    <span class="participant-name">You</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Smart Subtitles — dual line -->
+        <div id="subtitle-overlay" class="subtitle-overlay">
+            <div id="subtitle-original" class="subtitle-line subtitle-original"></div>
+            <div id="subtitle-translation" class="subtitle-line subtitle-translation"></div>
+        </div>
+
+        <!-- Call controls -->
+        <div class="call-controls">
+            <button id="btn-mute" class="control-btn" title="Mute">
+                <span class="icon">🎤</span>
+            </button>
+            <button id="btn-camera" class="control-btn" title="Toggle Camera">
+                <span class="icon">📷</span>
+            </button>
+            <button id="btn-flip" class="control-btn" title="Flip Camera">
+                <span class="icon">🔄</span>
+            </button>
+            <button id="btn-end" class="control-btn control-end" title="End Call">
+                <span class="icon">📵</span>
+            </button>
+        </div>
+
+        <!-- Event log (collapsible, for debugging) -->
+        <details class="event-log">
+            <summary>Event Log</summary>
+            <div id="event-log" class="log-content"></div>
+        </details>
+    </div>
+
+    <!-- Offscreen canvas for video frame capture -->
+    <canvas id="frame-canvas" style="display:none;" width="768" height="768"></canvas>
+
+    <!-- LiveKit Web Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
+    <script src="/static/js/app.js?v=2026031520"></script>
+</body>
+</html>
