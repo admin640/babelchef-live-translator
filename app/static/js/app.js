@@ -51,7 +51,8 @@ let nextPlayTime = 0;
 // ==========================================================
 document.getElementById("btn-create").addEventListener("click", async () => {
     if (!validateName()) return;
-    const roomId = String(Math.floor(100000 + Math.random() * 900000));
+    // Generate a secure, random 8-character alphanumeric room ID (e.g. "x7b9q2mp")
+    const roomId = Math.random().toString(36).substring(2, 10);
     document.getElementById("display-room-id").textContent = roomId;
     document.getElementById("room-created").classList.remove("hidden");
     currentRoomId = roomId;
